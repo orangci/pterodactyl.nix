@@ -134,7 +134,7 @@ in {
           user = cfg.database.redis.username;
           bind = cfg.database.redis.host;
           settings = {
-            dir = mkForce "/var/lib/pterodactyl/redis";
+            dir = mkForce "${cfg.dataDir}/redis";
             requirepass = cfg.database.redis.password;
           };
         };
