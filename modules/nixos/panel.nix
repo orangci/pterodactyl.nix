@@ -115,14 +115,14 @@ in {
     })
     {
       services = {
-        mysql = mkIf cfg.database.mysql.createLocally {
+        mysql = mkIf cfg.database.mysql.options.createLocally {
           enable = true;
-          ensureDatabases = [cfg.database.mysql.database];
+          ensureDatabases = [cfg.database.mysql.options.database];
           ensureUsers = [
             {
-              name = cfg.database.mysql.username;
+              name = cfg.database.mysql.options.username;
               ensurePermissions = {
-                "${cfg.database.mysql.database}.*" = "ALL PRIVILEGES";
+                "${cfg.database.mysql.options.database}.*" = "ALL PRIVILEGES";
               };
             }
           ];
@@ -130,12 +130,12 @@ in {
 
         redis.servers."${cfg.database.redis.database}" = {
           enable = true;
-          port = cfg.database.redis.port;
-          user = cfg.database.redis.username;
-          bind = cfg.database.redis.host;
+          port = cfg.database.redis.options.port;
+          user = cfg.database.redis.options.username;
+          bind = cfg.database.redis.options.host;
           settings = {
             dir = mkForce "${cfg.dataDir}/redis";
-            requirepass = cfg.database.redis.password;
+            requirepass = cfg.database.redis.options.password;
           };
         };
 
@@ -161,8 +161,8 @@ in {
 
       systemd.services.pteroq = {
         description = "Pterodactyl Queue Worker";
-        requires = ["mysql.service" "redis-${cfg.database.redis.database}.service"];
-        after = ["mysql.service" "redis-${cfg.database.redis.database}.service"];
+        requires = ["mysql.service" "redis-${cfg.database.redis.options.database}.service"];
+        after = ["mysql.service" "redis-${cfg.database.redis.options.database}.service"];
         unitConfig = {StartLimitInterval = 180;};
         serviceConfig = {
           User = cfg.user;
