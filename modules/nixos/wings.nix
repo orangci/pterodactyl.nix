@@ -44,23 +44,52 @@ in {
       default = null;
     };
 
+    rootDirectory = mkOption {
+      type = str;
+      default = "/var/lib/pterodactyl";
+      description = "Root directory for Pterodactyl.";
+    };
+
+    logDirectory = mkOption {
+      type = str;
+      default = "/var/log/pterodactyl";
+      description = "Log directory for Pterodactyl.";
+    };
+
+    data = mkOption {
+      type = str;
+      default = "/var/lib/pterodactyl/volumes";
+      description = "Data directory for Pterodactyl.";
+    };
+
+    archiveDirectory = mkOption {
+      type = str;
+      default = "/var/lib/pterodactyl/archives";
+      description = "Archive directory for Pterodactyl.";
+    };
+
+    backupDirectory = mkOption {
+      type = str;
+      default = "/var/lib/pterodactyl/backups";
+      description = "Backup directory for Pterodactyl.";
+    };
+
     config = mkOption {
       type = nullOr format.type;
       default = {
-        RootDirectory = "/var/lib/pterodactyl";
-        LogDirectory = "/var/log/pterodactyl";
-        Data = "/var/lib/pterodactyl/volumes";
-        ArchiveDirectory = "/var/lib/pterodactyl/archives";
-        BackupDirectory = "/var/lib/pterodactyl/backups";
+        RootDirectory = cfg.rootDirectory;
+        LogDirectory = cfg.logDirectory;
+        Data = cfg.dataDirectory;
+        ArchiveDirectory = cfg.archiveDirectory;
+        BackupDirectory = cfg.backupDirectory;
       };
 
-      # Alejandra fucked up my formatting here...
       description = ''
-            The configuration for the Wings daemon.
+        The configuration for the Wings daemon.
 
         :::{.note}
-            Pterodactyl does not have any documentation on configuring the Wings daemon. For available options
-            you must refer to the program's [source code](https://github.com/pterodactyl/wings/blob/develop/config/config.go#L64-L329)
+        Pterodactyl does not have any documentation on configuring the Wings daemon. For available options
+        you must refer to the program's [source code](https://github.com/pterodactyl/wings/blob/develop/config/config.go#L64-L329)
         :::
       '';
     };
