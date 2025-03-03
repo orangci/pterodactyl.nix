@@ -6,7 +6,6 @@ self: {
 }: let
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.types) nullOr package str path;
 
   format = pkgs.formats.yaml {};
@@ -38,9 +37,9 @@ in {
       description = "The file to store the Pterodactyl Wings daemon token in";
     };
 
-    configFile = lib.mkOption {
-      type = lib.types.nullOr lib.types.path;
-      description = lib.mdDoc "The path to the Pterodactyl Wings daemon configuration file";
+    configFile = mkOption {
+      type = nullOr path;
+      description = "The path to the Pterodactyl Wings daemon configuration file";
       default = null;
     };
 
@@ -122,8 +121,8 @@ in {
       # TODO: this is only compatible with Pterodactyl for now. We *can* make this configurable
       # by expecting the user to provide each directory, so that it is somewhat uniform.
       systemd.tmpfiles.rules = [
-        "d /var/log/pterodactyl 0700 ${cfg.user} ${cfg.group}"
-        "d /var/lib/pterodactyl 0700 ${cfg.user} ${cfg.group}"
+        "d ${cfg.config.RootDirectory} 0700 ${cfg.user} ${cfg.group}"
+        "d ${cfg.config.LogDirectory} 0700 ${cfg.user} ${cfg.group}"
         "d /etc/pterodactyl 0700 ${cfg.user} ${cfg.group}"
       ];
 
