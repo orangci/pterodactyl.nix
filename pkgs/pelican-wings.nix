@@ -4,7 +4,7 @@
   fetchFromGitHub,
 }: let
   pname = "wings";
-  version = "1.0.0-beta9";
+  version = "1.0.0-beta13";
 in
   buildGoModule {
     inherit pname version;
@@ -13,10 +13,10 @@ in
       owner = "pelican-dev";
       repo = "wings";
       tag = "v${version}";
-      sha256 = "sha256-bYIQAPBC7vLFLEJRYcuk8h2OgNZCrzQgP3hxK/f9Lv4=";
+      sha256 = "sha256-c28cJwFff/UuD6cp5s9vACj8MtN9ysfNKEtjXOFMY+k=";
     };
 
-    vendorHash = "sha256-kf0WPAIKtiUW/sWEhwTyptmnJheFQxiQSB2IEKml2FU=";
+    vendorHash = "sha256-pxPZZeJpocFzeD0n+KreV+oI2BhL8eZOWFtZDFYOe00=";
     subPackages = ["."];
 
     ldflags = [

@@ -37,9 +37,9 @@ in {
       description = "The file to store the Pterodactyl Wings daemon token in";
     };
 
-    configFile = mkOption {
+    configFile = lib.mkOption {
       type = nullOr path;
-      description = "The path to the Pterodactyl Wings daemon configuration file";
+      description = lib.mdDoc "The path to the Pterodactyl Wings daemon configuration file";
       default = null;
     };
 
@@ -55,7 +55,7 @@ in {
       description = "Log directory for Pterodactyl.";
     };
 
-    data = mkOption {
+    dataDirectory = mkOption {
       type = str;
       default = "/var/lib/pterodactyl/volumes";
       description = "Data directory for Pterodactyl.";
@@ -101,7 +101,7 @@ in {
       description = "Processed configuration.";
     };
   };
-  config = mkIf cfg.enable (mkMerge (
+  config = mkIf cfg.enable (mkMerge [
     (mkIf (cfg.user == "pterodactyl") {
       users.users = {
         pterodactyl = {
@@ -166,5 +166,5 @@ in {
         };
       };
     }
-  ));
+  ]);
 }
